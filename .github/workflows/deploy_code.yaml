@@ -1,12 +1,12 @@
 name: Deploy Snowflake Objects
 
-  on:
-    push:
-      branches:
-        -DEVstatus
+on:
+  push:
+    branches:
+      -DEVstatus
+  worflows-dispatch:
 
-    worflows-dispatch:
-  
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
