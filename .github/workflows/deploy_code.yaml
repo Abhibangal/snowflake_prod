@@ -3,7 +3,7 @@ name: Deploy Snowflake Objects
 on:
   push:
     branches:
-      -main
+      - main
 
 jobs:
   deploy:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v4
-        
+
       - name: Setup Python 3.10
         uses: actions/setup-python@v5
         with:
