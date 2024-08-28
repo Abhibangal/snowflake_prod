@@ -1,0 +1,21 @@
+name: Deploy Snowflake Objects
+
+on:
+  push:
+    branches:
+      -DEV
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+      
+      - name: instaling snowflake
+        run: pip install snowflake
+
+      - name: Deploy objects
+        run: |
+          snow sql  -q" Execute immediate from @GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD/branch/DEV/to_deploy_Snowflake_code/Snowflake Object Creatio.sql using (env => 'DEV' , schema_name => 'datamart')" --temporary-connection --account msbgaqj-pwb28963 --user Abhibangal --role ACCOUNTADMIN --warehouse COMPUTE_WH 
