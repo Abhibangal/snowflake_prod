@@ -1,8 +1,10 @@
 name: Deploy Snowflake Objects
 
 on:
-  workflow-dispatch:
-
+  push:
+    branches:
+      - main
+  
 
 jobs:
   deploy:
