@@ -3,7 +3,7 @@ name: Deploy Snowflake Objects
 on:
   push:
     branches:
-      -DEVstatus
+      -DEV
   worflows-dispatch:
 
 
