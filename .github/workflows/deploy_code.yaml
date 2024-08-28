@@ -15,6 +15,9 @@ jobs:
       
       - name: instaling snowflake
         run: pip install snowflake
+      
+      - name: instaling snowflake-cli-labs
+        run: pip install snowflake-cli-labs
 
       - name: Deploy objects
         run: |
