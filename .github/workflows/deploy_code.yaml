@@ -5,8 +5,6 @@ on:
     branches:
       -main
 
-  workflow-dispatch: 
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -23,4 +21,5 @@ jobs:
 
       - name: Deploy objects
         run: |
-          snow sql  -q" Execute immediate from @GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD/branch/DEV/to_deploy_Snowflake_code/Snowflake Object Creatio.sql using (env => 'DEV' , schema_name => 'datamart')" --temporary-connection --account msbgaqj-pwb28963 --user Abhibangal --role ACCOUNTADMIN --warehouse COMPUTE_WH 
+          snow sql -q "ALTER GIT REPOSITORY GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD FETCH"  --temporary-connection --account msbgaqj-pwb28963 --user Abhibangal --role ACCOUNTADMIN --warehouse COMPUTE_WH 
+          snow sql  -q"EXECUTE IMMEDIATE FROM  @GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD/branches/DEV/to_deploy_Snowflake_code/Snowflake Object Creatio.sql using (env => 'DEV' , schema_name => 'datamart')" --temporary-connection --account msbgaqj-pwb28963 --user Abhibangal --role ACCOUNTADMIN --warehouse COMPUTE_WH 
