@@ -36,4 +36,4 @@ jobs:
 
         run: |
           snow sql -q "ALTER GIT REPOSITORY GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD FETCH"  --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE 
-          snow sql  -q"EXECUTE IMMEDIATE FROM  @GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD/branches/DEV/to_deploy_Snowflake_code/Snowflake Object Creatio.sql using (env => 'DEV' , schema_name => 'datamart')" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE 
+          snow sql  -q "EXECUTE IMMEDIATE FROM  @GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD/branches/DEV/to_deploy_Snowflake_code/Snowflake_Object_Creatio.sql using (env => 'DEV' , schema_name => 'datamart')" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE 
