@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+      - QA
+      - DEV
   
 
 jobs:
@@ -32,8 +34,13 @@ jobs:
           SNOWFLAKE_PWD: ${{ secrets.SNOWFLAKE_PWD }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_DATABASE: ${{ github.ref == 'refs/heads/main'  && secrets.SNOWFLAKE_DATABASE_PROD || github.ref == 'refs/heads/QA'  && secrets.SNOWFLAKE_DATABASE_QA || github.ref == 'refs/heads/DEV'  && secrets.SNOWFLAKE_DATABASE_DEV  }}
 
 
         run: |
-          snow sql -q "ALTER GIT REPOSITORY GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD FETCH"  --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE 
-          snow sql  -q "EXECUTE IMMEDIATE FROM  @GIT_INTEGRATION.DEPLOYMENT.SNOWFLAKE_PROD/branches/DEV/to_deploy_Snowflake_code/Snowflake_Object_Creatio.sql using (env => 'DEV' , schema_name => 'datamart')" --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE 
+          for folder in snowflake_prod/to_deploy_Snowflake_code/*/;do
+            echo "Processing folder $folder ..."
+            for sqlfile in $folder*.sql;do
+              snow sql -f $sqlfile --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE > logs/$(basename $folder)/$(basename $sqlfile .sql).txt
+            done
+          done
