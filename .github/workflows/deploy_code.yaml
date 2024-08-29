@@ -39,7 +39,7 @@ jobs:
 
         run: |
           for folder in snowflake_prod/to_deploy_Snowflake_code/*/;do
-            echo "Processing folder $folder ..."
+            echo "Processing folder $(basename $folder) ..."
             log_folder = logs/$(basename $folder)
             mkdir -p $log_folder
             for sqlfile in $folder*.sql;do
