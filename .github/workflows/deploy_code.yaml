@@ -34,9 +34,13 @@ jobs:
           SNOWFLAKE_PWD: ${{ secrets.SNOWFLAKE_PWD }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_DATABASE: ${{ github.ref == 'refs/heads/main'  && secrets.SNOWFLAKE_DATABASE_PROD || 
-              github.ref == 'refs/heads/QA'  && secrets.SNOWFLAKE_DATABASE_QA || 
-              github.ref == 'refs/heads/DEV'  && secrets.SNOWFLAKE_DATABASE_DEV  }}
+          if  ${{ github.ref == 'refs/heads/main' }}; then
+            SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE_PROD }}
+          elif ${{ github.ref == 'refs/heads/QA' }}; then
+            SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE_QA }}
+          else
+              SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE_DEV }}
+          fi
 
         run: |
           echo SNOWFLAKE_ACCOUNT: $SNOWFLAKE_ACCOUNT
