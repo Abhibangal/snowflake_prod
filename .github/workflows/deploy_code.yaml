@@ -34,10 +34,15 @@ jobs:
           SNOWFLAKE_PWD: ${{ secrets.SNOWFLAKE_PWD }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_DATABASE: ${{ github.ref == 'refs/heads/main'  && secrets.SNOWFLAKE_DATABASE_PROD || github.ref == 'refs/heads/QA'  && secrets.SNOWFLAKE_DATABASE_QA || github.ref == 'refs/heads/DEV'  && secrets.SNOWFLAKE_DATABASE_DEV  }}
+          SNOWFLAKE_DATABASE: ${{ github.ref == 'refs/heads/main'  && secrets.SNOWFLAKE_DATABASE_PROD || github.ref == 'refs/heads/QA'  && secrets.     SNOWFLAKE_DATABASE_QA || github.ref == 'refs/heads/DEV'  && secrets.SNOWFLAKE_DATABASE_DEV  }}
 
 
         run: |
+          echo SNOWFLAKE_ACCOUNT: $SNOWFLAKE_ACCOUNT
+          echo  SNOWFLAKE_USERNAME: $SNOWFLAKE_USERNAME
+          echo  SNOWFLAKE_ROLE: $SNOWFLAKE_ROLE
+          echo  SNOWFLAKE_WAREHOUSE: $SNOWFLAKE_WAREHOUSE
+          echo  SNOWFLAKE_DATABASE: $SNOWFLAKE_DATABASE
           echo "Current directory: $(pwd)"
           cd /home/runner/work/snowflake_prod/snowflake_prod
           for folder in to_deploy_Snowflake_code/*/; do
@@ -45,7 +50,9 @@ jobs:
             log_folder="logs/$(basename $folder)"
             mkdir -p "$log_folder"
             for sqlfile in $folder/*; do
-              snow sql -f $sqlfile --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE --database $SNOWFLAKE_DATABASE > "$log_folder/$(basename $sqlfile .sql).txt"
+              snow sql -f $sqlfile --temporary-connection --account $SNOWFLAKE_ACCOUNT --user $SNOWFLAKE_USERNAME \
+              --password $SNOWFLAKE_PWD --role $SNOWFLAKE_ROLE --warehouse $SNOWFLAKE_WAREHOUSE \
+              --database $SNOWFLAKE_DATABASE > "$log_folder/$(basename $sqlfile .sql).txt"
             done
           done
           
