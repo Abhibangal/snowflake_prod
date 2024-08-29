@@ -42,7 +42,7 @@ jobs:
           cd /home/runner/work/snowflake_prod/snowflake_prod
           for folder in to_deploy_Snowflake_code/*/; do
             echo "Processing folder $(basename $folder) ..."
-            log_folder = logs/$(basename $folder))
+            log_folder = logs/$(basename $folder)
             mkdir -p $log_folder
 
             echo "log folder:  $log_folder"
