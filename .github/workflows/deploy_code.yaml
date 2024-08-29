@@ -34,7 +34,7 @@ jobs:
           SNOWFLAKE_PWD: ${{ secrets.SNOWFLAKE_PWD }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE_DEV }}  
+          SNOWFLAKE_DATABASE: $SNOWFLAKE_DATABASE_DEV
 
         run: |
           echo SNOWFLAKE_ACCOUNT: $SNOWFLAKE_ACCOUNT
