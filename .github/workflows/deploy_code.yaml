@@ -16,7 +16,16 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v4
 
-
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: instaling snowflake
+        run: pip install snowflake
+      
+      - name: instaling snowflake-cli-labs
+        run: pip install snowflake-cli-labs
 
       - name: Deploy objects
         env: 
@@ -25,11 +34,15 @@ jobs:
           SNOWFLAKE_PWD: ${{ secrets.SNOWFLAKE_PWD }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_DATABASE: $SNOWFLAKE_DATABASE_DEV
+          SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE_DEV }}  
 
         run: |
           echo SNOWFLAKE_ACCOUNT: $SNOWFLAKE_ACCOUNT
           echo  SNOWFLAKE_USERNAME: $SNOWFLAKE_USERNAME
           echo  SNOWFLAKE_ROLE: $SNOWFLAKE_ROLE
           echo  SNOWFLAKE_WAREHOUSE: $SNOWFLAKE_WAREHOUSE
-          echo  SNOWFLAKE_DATABASE: $SNOWFLAKE_DATABASE_DEV
+          echo  SNOWFLAKE_DATABASE: "$SNOWFLAKE_DATABASE_DEV"
+
+
+
+          
