@@ -38,6 +38,7 @@ jobs:
 
 
         run: |
+           echo "Current directory: $(pwd)"
           for folder in snowflake_prod/to_deploy_Snowflake_code/*/; do
             echo "Processing folder $(basename $folder) ..."
             log_folder = logs/$(basename $folder)
