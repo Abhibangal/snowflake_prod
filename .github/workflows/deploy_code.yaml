@@ -24,7 +24,7 @@ jobs:
           SNOWFLAKE_PWD: ${{ secrets.SNOWFLAKE_PWD }}
           SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
           SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_DATABASE: ${{ github.ref == 'refs/headd/main' && secrets.SNOWFLAKE_DATABASE_PROD ||  github.ref == 'refs/headd/QA' && secrets.SNOWFLAKE_DATABASE_QA  ||  github.ref == 'refs/headd/DEV' && secrets.SNOWFLAKE_DATABASE_DEV}} 
+          SNOWFLAKE_DATABASE: ${{ github.ref == 'refs/headd/main' && secrets.SNOWFLAKE_DATABASE_PROD ||  github.ref == 'refs/headd/QA' && secrets.SNOWFLAKE_DATABASE_QA  ||  secrets.SNOWFLAKE_DATABASE_DEV}} 
                                
 
         run: |
