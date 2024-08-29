@@ -7,7 +7,7 @@ on:
       - QA
       - DEV
     paths:
-      - 'to_deploy_Snowflake_code/**'
+      - to_deploy_Snowflake_code/**
 
 jobs:
   deploy:
